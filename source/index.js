@@ -6,19 +6,20 @@ import ReactDOM from 'react-dom';
 import './theme/init';
 
 const start = (
-    <div
+    <h1
         style = { {
             display:         'flex',
             justifyContent:  'center',
             alignItems:      'center',
             minHeight:       '100vh',
-            backgroundColor: 'slateblue',
+            backgroundColor: '#070A13',
             color:           'white',
             fontSize:        24,
             fontWeight:      '600',
+            textAlign:       'center',
         } }>
-        Интенсив по React: стартовая точка
-    </div>
+        Добро пожаловать на интенсив по React
+    </h1>
 );
 
 ReactDOM.render(start, document.getElementById('app'));

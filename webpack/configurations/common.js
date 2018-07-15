@@ -1,3 +1,6 @@
+// Core
+import getRepositoryName from 'git-repo-name';
+
 // Paths
 import { source, build } from '../paths';
 
@@ -7,7 +10,6 @@ import {
     loadFonts,
     loadImages,
     setupHtml,
-    setupFavicon,
     setupContextReplacement,
     setupStyledReporting,
     initializeEnvVariables
@@ -18,7 +20,8 @@ import merge from 'webpack-merge';
 
 export const generateCommonConfiguration = () => {
     const BUILD_ENV = process.env.BUILD_ENV;
-    const REPOSITORY_NAME = process.env.REPOSITORY_NAME;
+    const IS_DEPLOYING_TO_GITHUB_PAGES = process.env.DEPLOY_TARGET === 'github-pages';
+    const REPOSITORY_NAME = getRepositoryName.sync();
 
     return merge(
         // Loaders
@@ -29,7 +32,6 @@ export const generateCommonConfiguration = () => {
         // Plugins
         setupHtml(),
         setupContextReplacement(),
-        setupFavicon(),
         setupStyledReporting(),
         initializeEnvVariables({
             __ENV__:  JSON.stringify(BUILD_ENV),
@@ -42,23 +44,15 @@ export const generateCommonConfiguration = () => {
             },
             output: {
                 path:       build,
-                publicPath: REPOSITORY_NAME ? `/${REPOSITORY_NAME}/` : '/',
+                publicPath: IS_DEPLOYING_TO_GITHUB_PAGES ? `/${REPOSITORY_NAME}/` : '/',
             },
             resolve: {
-                extensions: [
-                    '.mjs',
-                    '.js',
-                    '.json',
-                    '.css',
-                    '.m.css',
-                    '.png',
-                    '.jpg'
-                ],
-                modules: [source, 'node_modules'],
+                extensions: ['.mjs', '.js', '.json', '.css', '.m.css', '.png', '.jpg'],
+                modules:    [source, 'node_modules'],
             },
             optimization: {
                 nodeEnv: process.env.NODE_ENV,
             },
-        },
+        }
     );
 };
