@@ -25,6 +25,7 @@ class Post extends Component {
                 <a>{userName}</a>
                 <time>{moment().locale('ru').format("MMMM D hh:mm a")}</time>
                 <p>Comment {commentIndex}</p>
+                {this.props.children}
             </section>
         );
     }
