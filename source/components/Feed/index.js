@@ -8,7 +8,9 @@ class Feed extends Component {
         return (
             <section className={Styles.feed}>
                 <Composer/>
-                <Post/>
+                {
+                    [...Array(10).keys()].map((item)=><Post key={item} index={item}/>)
+                }
             </section>
         );
     }
