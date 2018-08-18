@@ -1,8 +1,8 @@
 import React, {Component} from 'react';
 import {hot} from 'react-hot-loader';
 
-import Composer from "../components/Composer";
-import Post from "../components/Post";
+import Composer from "../../components/Composer/index";
+import Post from "../../components/Post/index";
 
 @hot(module)
 class App extends Component {
