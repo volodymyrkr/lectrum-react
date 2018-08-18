@@ -4,6 +4,7 @@ import ReactDOM from 'react-dom';
 
 // Theme
 import './theme/init';
+import App from "./App";
 
 const start = (
     <h1
@@ -22,13 +23,4 @@ const start = (
     </h1>
 );
 
-let variable = "asd";
-
-const H1 = <h1 title="asd">Head 1</h1>;
-const H2 = () => <h1 title="asd">Head 2</h1>;
-
-const list = [... Array(10).keys()].map((item)=><li key={item}>{item}</li>);
-
-console.log(Array(10).keys());
-
-ReactDOM.render(<ul>{list}</ul>, document.getElementById('app'));
+ReactDOM.render(<App/>, document.getElementById('app'));
