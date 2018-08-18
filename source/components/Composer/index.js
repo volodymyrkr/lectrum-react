@@ -6,6 +6,7 @@ import avatar from '../../theme/assets/homer.png';
 
 class Composer extends Component {
     render () {
+        const {avatar, currentUserFirstName, currentUserLastName} = this.props;
         return (
             <section className={Styles.composer}>
                 <img src={avatar} alt="" className="src"/>

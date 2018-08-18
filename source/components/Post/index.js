@@ -3,6 +3,8 @@ import PropTypes from 'prop-types';
 import moment from 'moment';
 import 'moment/locale/ru';
 
+import defaultAvatar from "../../theme/assets/lisa.png";
+
 import Styles from './styles.m.css';
 
 class Post extends Component {
@@ -22,11 +24,16 @@ class Post extends Component {
         return (
             <section className={Styles.post}>
                 <span className={Styles.cross}></span>
-                <img src={avatar} alt="" className="src"/>
-                <a>{userName!="Unknown"?userName:(currentUserFirstName+" "+currentUserLastName)}</a>
+                <img src={!!avatar?avatar:defaultAvatar} alt="" className="src"/>
+                <a>{!currentUserFirstName?userName:(currentUserFirstName+" "+currentUserLastName)}</a>
                 <time>{moment().locale('ru').format("MMMM D hh:mm a")}</time>
                 <p>Comment {commentIndex}</p>
-                <ul className={Styles.listItems}>{this.props.children.map((item)=><li key={item}>{item}</li>)}</ul>
+                <ul className={Styles.listItems}>{
+                        this.props.children.map(
+                        (item)=>{return <li key={item}>{item}</li>}
+                        )
+                    }
+                </ul>
             </section>
         );
     }

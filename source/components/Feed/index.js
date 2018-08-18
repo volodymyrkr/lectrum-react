@@ -7,11 +7,11 @@ class Feed extends Component {
     render () {
         return (
             <section className={Styles.feed}>
-                <Composer/>
+                <Composer {...this.props}/>
                 {
                     [...Array(10).keys()].map((item) => {
                         return (
-                            <Post key={item} index={item} {...this.props}>
+                            <Post key={item} index={item}>
                                 {["All rights reserved", "Demo version"]}
                             </Post>
                         );
