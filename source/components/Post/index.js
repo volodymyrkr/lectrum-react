@@ -3,7 +3,7 @@ import React, {Component} from 'react';
 import moment from 'moment';
 import 'moment/locale/ru';
 
-import avatar from "../../theme/assets/homer.png";
+import avatar from "../../theme/assets/lisa.png";
 
 class Post extends Component {
     render() {
