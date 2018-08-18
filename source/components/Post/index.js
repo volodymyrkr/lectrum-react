@@ -15,10 +15,10 @@ class Post extends Component {
     }
 
     static defaultProps = {
-        userName: "Unknown Homer"
+        userName: "Unknown"
     }
     render () {
-        const {index:commentIndex, userName="Unknown", currentUserFirstName, currentUserLastName, avatar} = this.props;
+        const {index:commentIndex, userName="noname", currentUserFirstName, currentUserLastName, avatar} = this.props;
         return (
             <section className={Styles.post}>
                 <span className={Styles.cross}></span>
