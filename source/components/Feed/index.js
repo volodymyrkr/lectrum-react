@@ -8,7 +8,7 @@ class Feed extends Component {
         const {avatar, currentUserFirstName, currentUserLastName} = this.props;
         return (
             <section className={Styles.feed}>
-                <Composer avatar = {avatar} currentUserFirstName={currentUserFirstName} currentUserLastName={currentUserLastName}/>
+                <Composer/>
                 <div className={Styles.postsContainer}>
                     {
                         [...Array(10).keys()].map((item) => {
