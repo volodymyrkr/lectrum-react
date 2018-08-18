@@ -6,8 +6,8 @@ import avatar from "../../theme/assets/homer.png";
 
 const userConfig = {
     avatar,
-    currentUserFirstName: "ASD",
-    currentUserLastName: "zxc"
+    currentUserFirstName: "Homer",
+    currentUserLastName: "Unknown"
 }
 
 @hot(module)
