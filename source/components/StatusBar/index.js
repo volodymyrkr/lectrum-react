@@ -11,11 +11,9 @@ class StatusBar extends Component {
                     (context) => {
                         return (
                             <section className={Styles.statusBar}>
-                                <div className={Styles.status}>
-                                    <div className={Styles.offline}>
-                                        <div>Offline</div>
-                                        <span></span>
-                                    </div>
+                                <div className={`${Styles.status} ${Styles.offline}`}>
+                                    <div>Offline</div>
+                                    <span></span>
                                 </div>
                                 <button>
                                     <img src={context.avatar} alt=""/>
