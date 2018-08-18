@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import {Consumer} from "../../hoc/withProfile";
+import { Consumer } from "../../hoc/withProfile";
 
 import Styles from './styles.m.css';
 
@@ -11,9 +11,11 @@ class StatusBar extends Component {
                     (context) => {
                         return (
                             <section className={Styles.statusBar}>
-                                <div className={Styles.offline}>
-                                    <div>Offline</div>
-                                    <span></span>
+                                <div className={Styles.status}>
+                                    <div className={Styles.offline}>
+                                        <div>Offline</div>
+                                        <span></span>
+                                    </div>
                                 </div>
                                 <button>
                                     <img src={context.avatar} alt=""/>
@@ -21,7 +23,7 @@ class StatusBar extends Component {
                                     <span>{context.currentUserLastName}</span>
                                 </button>
                             </section>
-                        )
+                        );
                     }
                 }
             </Consumer>
