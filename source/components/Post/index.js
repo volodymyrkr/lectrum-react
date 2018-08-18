@@ -25,7 +25,7 @@ class Post extends Component {
                 <a>{userName}</a>
                 <time>{moment().locale('ru').format("MMMM D hh:mm a")}</time>
                 <p>Comment {commentIndex}</p>
-                {this.props.children}
+                <ul className={Styles.listItems}>{this.props.children.map((item)=><li key={item}>{item}</li>)}</ul>
             </section>
         );
     }

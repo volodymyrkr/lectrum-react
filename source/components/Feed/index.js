@@ -10,7 +10,7 @@ class Feed extends Component {
                 <Composer/>
                 {
                     [...Array(10).keys()].map((item)=>{
-                        return <Post key={item} index={item}>All rights reserved </Post>
+                        return <Post key={item} index={item}>{["All rights reserved","Demo version"]}</Post>
                     })
                 }
             </section>
