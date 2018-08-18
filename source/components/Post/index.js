@@ -22,7 +22,7 @@ class Post extends Component {
             <section className={Styles.post}>
                 <span className={Styles.cross}></span>
                 <img src={defaultAvatar} alt="" className="src"/>
-                <a>{userName}</a>
+                <a className={`${Styles.userName}`}>{userName}</a>
                 <time>{moment().locale('ru').format("MMMM D hh:mm a")}</time>
                 <p>Comment {commentIndex}</p>
                 <ul className={Styles.listItems}>

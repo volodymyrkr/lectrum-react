@@ -44,12 +44,17 @@ time {
 }
 
 &
-a {
+.userName {
     top: 15px;
     color: var(--paletteColor7);
     font-weight: 700;
-}
 
+
+
+}
+& .active {
+      color: aquamarine;
+  }
 &
 time {
     top: 35px;
