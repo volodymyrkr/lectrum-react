@@ -7,6 +7,7 @@ import avatar from "../../theme/assets/homer.png";
 import {Provider} from "../../hoc/withProfile";
 
 import './common.css';
+import StatusBar from "../../components/StatusBar";
 
 const userConfig = {
     avatar,
@@ -19,6 +20,7 @@ class App extends Component {
     render () {
         return (
             <Provider value={userConfig}>
+                <StatusBar/>
                 <Feed />
             </Provider>
         );
