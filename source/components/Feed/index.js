@@ -5,18 +5,21 @@ import Post from "../Post";
 
 class Feed extends Component {
     render () {
+        const {avatar, currentUserFirstName, currentUserLastName} = this.props;
         return (
             <section className={Styles.feed}>
-                <Composer {...this.props}/>
-                {
-                    [...Array(10).keys()].map((item) => {
-                        return (
-                            <Post key={item} index={item}>
-                                {["All rights reserved", "Demo version"]}
-                            </Post>
-                        );
-                    })
-                }
+                <Composer avatar = {avatar} currentUserFirstName={currentUserFirstName} currentUserLastName={currentUserLastName}/>
+                <div className={Styles.postsContainer}>
+                    {
+                        [...Array(10).keys()].map((item) => {
+                            return (
+                                <Post key={item} index={item} userName={currentUserFirstName}>
+                                    {["All rights reserved", "Demo version"]}
+                                </Post>
+                            );
+                        })
+                    }
+                </div>
             </section>
         );
     }

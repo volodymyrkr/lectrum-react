@@ -11,26 +11,24 @@ class Post extends Component {
     static propTypes = {
         index: PropTypes.number.isRequired,
         userName: PropTypes.string.isRequired,
-        currentUserFirstName: PropTypes.string,
-        currentUserLastName: PropTypes.string,
-        avatar: PropTypes.string.isRequired
     }
 
     static defaultProps = {
         userName: "Unknown"
     }
     render () {
-        const {index:commentIndex, userName="noname", currentUserFirstName, currentUserLastName, avatar} = this.props;
+        const {index:commentIndex, userName="noname"} = this.props;
         return (
             <section className={Styles.post}>
                 <span className={Styles.cross}></span>
-                <img src={!!avatar?avatar:defaultAvatar} alt="" className="src"/>
-                <a>{!currentUserFirstName?userName:(currentUserFirstName+" "+currentUserLastName)}</a>
+                <img src={defaultAvatar} alt="" className="src"/>
+                <a>{userName}</a>
                 <time>{moment().locale('ru').format("MMMM D hh:mm a")}</time>
                 <p>Comment {commentIndex}</p>
-                <ul className={Styles.listItems}>{
+                <ul className={Styles.listItems}>
+                    {
                         this.props.children.map(
-                        (item)=>{return <li key={item}>{item}</li>}
+                            (item)=>{return <li key={item}>{item}</li>}
                         )
                     }
                 </ul>

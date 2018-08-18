@@ -5,6 +5,10 @@
     min-height: 100vh;
     background-color: var(--paletteColor3);
 
+    & .postsContainer {
+        padding: 1rem;
+     }
+
     &.postInStart {
       transform: scale(.5);
       opacity: .01;
