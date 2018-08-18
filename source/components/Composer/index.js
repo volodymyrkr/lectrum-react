@@ -22,7 +22,7 @@ class Composer extends Component {
                                     <div className={Styles.userName}>{context.currentUserFirstName} {context.currentUserLastName}</div>
                                 </div>
                                 <form>
-                                    <textarea placeholder="Input your post"></textarea>
+                                    <textarea placeholder={`Input your post ${context.currentUserFirstName}`}></textarea>
                                     <input type="submit" value="post"/>
                                 </form>
                             </section>
