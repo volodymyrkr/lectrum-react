@@ -12,17 +12,19 @@ import Counter from "../Counter";
 import Catcher from "../Catcher";
 import Spinner from "../Spinner";
 
+import { api } from "../../REST/api";
+
 class Feed extends Component {
     state = {
-        isSpinning: true,
-        posts: [
-            { id:                     getUniqueID(),
+        isSpinning: false,
+        posts:      [
+            { id:                   getUniqueID(),
                 avatar:               lisaAvatar,
                 comment:              "asdasdasd",
                 currentUserFirstName: "asd",
-                currentUserLastName:  "zxc"
+                currentUserLastName:  "zxc",
             }
-        ]
+        ],
     };
 
     addPost = (post) => {
@@ -33,46 +35,68 @@ class Feed extends Component {
                     comment:              post.comment,
                     avatar:               post.avatar,
                     currentUserFirstName: post.userFirstName,
-                    currentUserLastName:  post.userLastName
-                }, ...prevState.posts]
+                    currentUserLastName:  post.userLastName,
+                }, ...prevState.posts],
             })
         );
     };
 
     removePost = (post) => {
         const posts = this.state.posts;
+
         this.setState({
             posts: posts.filter(
                 (item) => item.id !== post.id
-            )
+            ),
         });
 
     };
 
     removeAllPosts = () => {
         this.setState({
-            posts: []
+            posts: [],
         });
 
     };
+    setPostsFetchingState=(isSpinning)=>{
+        this.setState({
+            isSpinning
+        })
+    }
+    fetchPostsAsync = async () => {
+        try {
+            this.setPostsFetchingState(true)
+            const posts = await api.fetchPosts();
+            this.setState(()=>({
+                posts
+            }))
+
+        } catch (error) {
+
+        } finally {
+            this.setPostsFetchingState(false);
+        }
+    }
+    componentDidMount () {
+        this.fetchPostsAsync();
+    }
 
     render () {
-        const {posts, isSpinning} = this.state;
+        const { posts, isSpinning } = this.state;
         const postsJSX = (
-            <div className={Styles.postsContainer}>
+            <div className = { Styles.postsContainer }>
                 {
                     posts.map((item) => {
                         return (
-                            <Catcher key={item.id}>
-                            <Post
-                                id={item.id}
-                                avatar={item.avatar}
-                                comment={item.comment}
-                                userName={`${item.currentUserFirstName} ${item.currentUserLastName}`}
-                                onRemove={this.removePost}
-                            >
-                                {["All rights reserved", "Demo version"]}
-                            </Post>
+                            <Catcher key = { item.id }>
+                                <Post
+                                    avatar = { item.avatar }
+                                    comment = { item.comment }
+                                    id = { item.id }
+                                    onRemove = { this.removePost }
+                                    userName = { `${item.currentUserFirstName} ${item.currentUserLastName}` }>
+                                    {["All rights reserved", "Demo version"]}
+                                </Post>
                             </Catcher>
                         );
                     })
@@ -81,12 +105,12 @@ class Feed extends Component {
         );
 
         return (
-            <section className={Styles.feed}>
-                <StatusBar/>
-                <Composer onPost={this.addPost} onRemoveAllPosts={this.removeAllPosts}/>
-                <Counter count={posts.length} />
+            <section className = { Styles.feed }>
+                <StatusBar />
+                <Composer onPost = { this.addPost } onRemoveAllPosts = { this.removeAllPosts } />
+                <Counter count = { posts.length } />
                 {postsJSX}
-                <Spinner isSpinning={isSpinning}/>
+                <Spinner isSpinning = { isSpinning } />
             </section>
         );
     }
