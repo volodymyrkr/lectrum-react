@@ -17,7 +17,6 @@ class Feed extends Component {
     }
 
     addPost = (post) => {
-        console.log(post)
         this.setState(
             (prevState)=>({
                 posts:[{
@@ -30,26 +29,32 @@ class Feed extends Component {
             })
         )
     }
+
     render () {
-        const postsJSX = this.state.posts.map((item) => {
-            return (
-                <Post
-                    key={item.id}
-                    id = {item.id}
-                    avatar={item.avatar}
-                    comment = {item.comment}
-                    userName={`${item.currentUserFirstName} ${item.currentUserLastName}`}>
-                    {["All rights reserved", "Demo version"]}
-                </Post>
-            );
-        });
+        const postsJSX = (
+            <div className={Styles.postsContainer}>
+                {
+                    this.state.posts.map((item) => {
+                        return (
+                            <Post
+                                key={item.id}
+                                id = {item.id}
+                                avatar={item.avatar}
+                                comment = {item.comment}
+                                userName={`${item.currentUserFirstName} ${item.currentUserLastName}`}>
+                                {["All rights reserved", "Demo version"]}
+                            </Post>
+                        );
+                    })
+                }
+            </div>
+        );
+
         return (
             <section className={Styles.feed}>
                 <StatusBar/>
                 <Composer onPost={this.addPost}/>
-                <div className={Styles.postsContainer}>
-                    {postsJSX}
-                </div>
+                {postsJSX}
             </section>
         );
     }

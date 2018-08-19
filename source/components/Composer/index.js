@@ -16,9 +16,11 @@ class Composer extends Component {
         currentUserFirstName:'',
         currentUserLastName:''
     }
+
     addPost(post) {
         this.props.onPost(post);
     }
+
     onChangeTextArea=(e)=>{
         const {value} = e.target;
         this.setState({
@@ -29,7 +31,7 @@ class Composer extends Component {
     onSubmitForm =(e)=>{
         e.preventDefault();
         const {comment,avatar,currentUserFirstName,currentUserLastName} = this.state;
-        if (!comment) {
+        if (!comment.trim()) {
             return null;
         }
 
