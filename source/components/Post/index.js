@@ -8,8 +8,8 @@ import Styles from './styles.m.css';
 
 class Post extends Component {
     static propTypes = {
+        id: PropTypes.string.isRequired,
         userName: PropTypes.string.isRequired,
-        id: PropTypes.number,
         avatar: PropTypes.string,
         comment: PropTypes.string
     };
@@ -30,7 +30,7 @@ class Post extends Component {
                                 <img src={avatar} alt="" className="src"/>
                                 <a className={`${Styles.userName}`}>{userName}</a>
                                 <time>{moment().locale('ru').format("MMMM D hh:mm a")}</time>
-                                <p>{context.currentUserFirstName}, {id} {comment}</p>
+                                <p>{context.currentUserFirstName}, {comment}</p>
                                 <ul className={Styles.listItems}>
                                     {
                                         this.props.children.map(

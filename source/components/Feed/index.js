@@ -7,15 +7,28 @@ import StatusBar from "../StatusBar";
 import lisaAvatar from "../../theme/assets/lisa.png";
 import homerAvatar from "../../theme/assets/homer.png";
 
+import {getUniqueID} from '../../instruments';
+
 class Feed extends Component {
     state = {
-        posts: [
-            {id:0, avatar:lisaAvatar, comment:"asdasdasd", currentUserFirstName: "asd", currentUserLastName: "zxc"},
-            {id:1, avatar:lisaAvatar, comment:"bla bla bla", currentUserFirstName: "asd", currentUserLastName: "zxc"},
-            {id:2, avatar:lisaAvatar, comment:"asdasdasd", currentUserFirstName: "asd", currentUserLastName: "zxc"},
-            {id:3, avatar:homerAvatar, comment:"asdasdasd", currentUserFirstName: "asd", currentUserLastName: "zxc"},
-            {id:4, avatar:lisaAvatar, comment:"asdasdasd", currentUserFirstName: "asd", currentUserLastName: "zxc"}
+        posts:[
+            {id:getUniqueID(), avatar:lisaAvatar, comment:"asdasdasd", currentUserFirstName: "asd", currentUserLastName: "zxc"}
         ]
+    }
+
+    addPost = (post) => {
+        console.log(post)
+        this.setState(
+            (prevState)=>({
+                posts:[{
+                    id:getUniqueID(),
+                    comment: post.comment,
+                    avatar: post.avatar,
+                    currentUserFirstName: post.userFirstName,
+                    currentUserLastName: post.userLastName
+                }, ...prevState.posts]
+            })
+        )
     }
     render () {
         const postsJSX = this.state.posts.map((item) => {
@@ -33,7 +46,7 @@ class Feed extends Component {
         return (
             <section className={Styles.feed}>
                 <StatusBar/>
-                <Composer/>
+                <Composer onPost={this.addPost}/>
                 <div className={Styles.postsContainer}>
                     {postsJSX}
                 </div>
