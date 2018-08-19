@@ -18,6 +18,11 @@ class Post extends Component {
         userName: "Unknown"
     };
 
+    onClickHandler = (e)=> {
+        console.log("DELETE");
+        this.props.onRemove({id:this.props.id});
+    }
+
     render () {
         const { id, userName = "noname", avatar, comment  } = this.props;
         return (
@@ -26,7 +31,7 @@ class Post extends Component {
                     (context) => {
                         return (
                             <section className={Styles.post}>
-                                <span className={Styles.cross}></span>
+                                <span className={Styles.cross} onClick={this.onClickHandler}></span>
                                 <img src={avatar} alt="" className="src"/>
                                 <a className={`${Styles.userName}`}>{userName}</a>
                                 <time>{moment().locale('ru').format("MMMM D hh:mm a")}</time>

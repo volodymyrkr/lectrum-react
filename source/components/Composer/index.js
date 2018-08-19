@@ -7,47 +7,70 @@ import avatar from '../../theme/assets/homer.png';
 import { Consumer } from "../../hoc/withProfile";
 
 class Composer extends Component {
-    static propTypes = {
-    };
+    static propTypes = {};
 
     state = {
-        comment: '',
-        avatar: avatar,
-        currentUserFirstName:'',
-        currentUserLastName:''
+        comment:              '',
+        avatar:               avatar,
+        currentUserFirstName: '',
+        currentUserLastName:  ''
+    };
+
+    addPost () {
+        const { comment, avatar, currentUserFirstName, currentUserLastName } = this.state;
+        const { onPost } = this.props;
+
+        if (!comment.trim()){
+            return;
+        }
+
+        onPost({
+            avatar:        avatar,
+            userFirstName: currentUserFirstName,
+            userLastName:  currentUserLastName,
+            comment:       comment
+        });
+
+        this.setState({
+            comment: ""
+        });
     }
 
-    addPost(post) {
-        this.props.onPost(post);
-    }
-
-    onChangeTextArea=(e)=>{
-        const {value} = e.target;
+    onChangeTextArea = (e) => {
+        const { value } = e.target;
         this.setState({
             comment: value
-        })
-    }
-
-    onSubmitForm =(e)=>{
+        });
+    };
+    onCopyCutHandler = (e) => {
+        debugger;
         e.preventDefault();
-        const {comment,avatar,currentUserFirstName,currentUserLastName} = this.state;
+    };
+
+    onKeyPressHandler = (e) => {
+        if (e.keyCode === 13) {
+            e.preventDefault();
+            this.addPost();
+        }
+    };
+
+    onSubmitForm = (e) => {
+        e.preventDefault();
+        const { comment, avatar, currentUserFirstName, currentUserLastName } = this.state;
         if (!comment.trim()) {
             return null;
         }
 
         this.addPost({
-            avatar: avatar,
+            avatar:        avatar,
             userFirstName: currentUserFirstName,
-            userLastName: currentUserLastName,
-            comment: comment
+            userLastName:  currentUserLastName,
+            comment:       comment
         });
+    };
 
-        this.setState({
-            comment:""
-        })
-    }
     render () {
-        const {comment} = this.state;
+        const { comment } = this.state;
 
         return (
             <Consumer>
@@ -57,13 +80,17 @@ class Composer extends Component {
                             <section className={Styles.composer}>
                                 <div>
                                     <img src={avatar} alt="" className="src"/>
-                                    <div className={Styles.userName}>{context.currentUserFirstName} {context.currentUserLastName}</div>
+                                    <div
+                                        className={Styles.userName}>{context.currentUserFirstName} {context.currentUserLastName}</div>
                                 </div>
-                                <form onSubmit={this.onSubmitForm}>
+                                <form id="form" onSubmit={this.onSubmitForm} onKeyDown={this.onKeyPressHandler}>
                                     <textarea id="text"
-                                        placeholder={`Input your post ${context.currentUserFirstName}`}
-                                        value={comment}
-                                        onChange={this.onChangeTextArea}
+                                              placeholder={`Input your post ${context.currentUserFirstName}`}
+                                              value={comment}
+                                              onChange={this.onChangeTextArea}
+                                              onCut={this.onCopyCutHandler}
+                                              onCopy={this.onCopyCutHandler}
+
                                     ></textarea>
                                     <input type="submit" value="post"/>
                                 </form>

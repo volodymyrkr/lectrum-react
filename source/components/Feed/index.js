@@ -7,28 +7,43 @@ import StatusBar from "../StatusBar";
 import lisaAvatar from "../../theme/assets/lisa.png";
 import homerAvatar from "../../theme/assets/homer.png";
 
-import {getUniqueID} from '../../instruments';
+import { getUniqueID } from '../../instruments';
 
 class Feed extends Component {
     state = {
-        posts:[
-            {id:getUniqueID(), avatar:lisaAvatar, comment:"asdasdasd", currentUserFirstName: "asd", currentUserLastName: "zxc"}
+        posts: [
+            { id:                     getUniqueID(),
+                avatar:               lisaAvatar,
+                comment:              "asdasdasd",
+                currentUserFirstName: "asd",
+                currentUserLastName:  "zxc"
+            }
         ]
-    }
+    };
 
     addPost = (post) => {
         this.setState(
-            (prevState)=>({
-                posts:[{
-                    id:getUniqueID(),
-                    comment: post.comment,
-                    avatar: post.avatar,
+            (prevState) => ({
+                posts: [{
+                    id:                   getUniqueID(),
+                    comment:              post.comment,
+                    avatar:               post.avatar,
                     currentUserFirstName: post.userFirstName,
-                    currentUserLastName: post.userLastName
+                    currentUserLastName:  post.userLastName
                 }, ...prevState.posts]
             })
-        )
-    }
+        );
+    };
+
+    removePost = (post) => {
+        const posts = this.state.posts;
+        this.setState({
+            posts: posts.filter(
+                (item) => item.id !== post.id
+            )
+        });
+
+    };
 
     render () {
         const postsJSX = (
@@ -38,10 +53,12 @@ class Feed extends Component {
                         return (
                             <Post
                                 key={item.id}
-                                id = {item.id}
+                                id={item.id}
                                 avatar={item.avatar}
-                                comment = {item.comment}
-                                userName={`${item.currentUserFirstName} ${item.currentUserLastName}`}>
+                                comment={item.comment}
+                                userName={`${item.currentUserFirstName} ${item.currentUserLastName}`}
+                                onRemove={this.removePost}
+                            >
                                 {["All rights reserved", "Demo version"]}
                             </Post>
                         );
