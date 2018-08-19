@@ -4,14 +4,14 @@ import { Consumer } from "../../hoc/withProfile";
 import moment from 'moment';
 import 'moment/locale/ru';
 
-import defaultAvatar from "../../theme/assets/lisa.png";
-
 import Styles from './styles.m.css';
 
 class Post extends Component {
     static propTypes = {
-        index:    PropTypes.number.isRequired,
         userName: PropTypes.string.isRequired,
+        id: PropTypes.number,
+        avatar: PropTypes.string,
+        comment: PropTypes.string
     };
 
     static defaultProps = {
@@ -19,7 +19,7 @@ class Post extends Component {
     };
 
     render () {
-        const { index: commentIndex, userName = "noname" } = this.props;
+        const { id, userName = "noname", avatar, comment  } = this.props;
         return (
             <Consumer>
                 {
@@ -27,10 +27,10 @@ class Post extends Component {
                         return (
                             <section className={Styles.post}>
                                 <span className={Styles.cross}></span>
-                                <img src={defaultAvatar} alt="" className="src"/>
+                                <img src={avatar} alt="" className="src"/>
                                 <a className={`${Styles.userName}`}>{userName}</a>
                                 <time>{moment().locale('ru').format("MMMM D hh:mm a")}</time>
-                                <p>{context.currentUserFirstName}, Comment {commentIndex}</p>
+                                <p>{context.currentUserFirstName}, {id} {comment}</p>
                                 <ul className={Styles.listItems}>
                                     {
                                         this.props.children.map(

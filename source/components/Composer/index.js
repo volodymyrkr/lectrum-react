@@ -10,7 +10,24 @@ class Composer extends Component {
     static propTypes = {
     };
 
+    state = {
+        comment: ''
+    }
+
+    onChangeTextArea=(e)=>{
+        const {value} = e.target;
+        this.setState({
+            comment: value
+        })
+    }
+
+    onSubmitForm =(e)=>{
+        e.preventDefault();
+        console.log(e.target.text.value);
+    }
     render () {
+        const {comment} = this.state;
+
         return (
             <Consumer>
                 {
@@ -21,8 +38,12 @@ class Composer extends Component {
                                     <img src={avatar} alt="" className="src"/>
                                     <div className={Styles.userName}>{context.currentUserFirstName} {context.currentUserLastName}</div>
                                 </div>
-                                <form>
-                                    <textarea placeholder={`Input your post ${context.currentUserFirstName}`}></textarea>
+                                <form onSubmit={this.onSubmitForm}>
+                                    <textarea id="text"
+                                        placeholder={`Input your post ${context.currentUserFirstName}`}
+                                        value={comment}
+                                        onChange={this.onChangeTextArea}
+                                    ></textarea>
                                     <input type="submit" value="post"/>
                                 </form>
                             </section>
