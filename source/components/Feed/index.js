@@ -9,9 +9,12 @@ import homerAvatar from "../../theme/assets/homer.png";
 
 import { getUniqueID } from '../../instruments';
 import Counter from "../Counter";
+import Catcher from "../Catcher";
+import Spinner from "../Spinner";
 
 class Feed extends Component {
     state = {
+        isSpinning: true,
         posts: [
             { id:                     getUniqueID(),
                 avatar:               lisaAvatar,
@@ -54,14 +57,14 @@ class Feed extends Component {
     };
 
     render () {
-        const {posts} = this.state;
+        const {posts, isSpinning} = this.state;
         const postsJSX = (
             <div className={Styles.postsContainer}>
                 {
                     posts.map((item) => {
                         return (
+                            <Catcher key={item.id}>
                             <Post
-                                key={item.id}
                                 id={item.id}
                                 avatar={item.avatar}
                                 comment={item.comment}
@@ -70,6 +73,7 @@ class Feed extends Component {
                             >
                                 {["All rights reserved", "Demo version"]}
                             </Post>
+                            </Catcher>
                         );
                     })
                 }
@@ -82,6 +86,7 @@ class Feed extends Component {
                 <Composer onPost={this.addPost} onRemoveAllPosts={this.removeAllPosts}/>
                 <Counter count={posts.length} />
                 {postsJSX}
+                <Spinner isSpinning={isSpinning}/>
             </section>
         );
     }

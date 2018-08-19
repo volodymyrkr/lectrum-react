@@ -5,6 +5,7 @@ import moment from 'moment';
 import 'moment/locale/ru';
 
 import Styles from './styles.m.css';
+import { errorStyle, successStyle } from "../../utils/errors";
 
 class Post extends Component {
     static propTypes = {
@@ -18,6 +19,15 @@ class Post extends Component {
         userName: "Unknown"
     };
 
+    componentWillMount () {
+        console.log("%c WILLMOUNT", successStyle);
+    }
+
+    componentDidMount () {
+        console.log("%c DIDMOUNT", errorStyle);
+    }
+
+
     onClickHandler = (e)=> {
         const {id, onRemove} = this.props;
 
@@ -25,7 +35,9 @@ class Post extends Component {
     }
 
     render () {
+        console.log("%c RENDER", successStyle);
         const { id, userName = "noname", avatar, comment  } = this.props;
+        if (comment=="error") undefined();
         return (
             <Consumer>
                 {

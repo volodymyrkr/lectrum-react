@@ -13,11 +13,11 @@ export class Composer extends Component {
 
     constructor (props) {
         super(props);
-        this.state = {...props};
-
     }
+
     state = {
-        comment:              ''
+        comment: '',
+        ...this.props,
     };
 
     addPost () {
