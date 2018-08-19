@@ -19,8 +19,9 @@ class Post extends Component {
     };
 
     onClickHandler = (e)=> {
-        console.log("DELETE");
-        this.props.onRemove({id:this.props.id});
+        const {id, onRemove} = this.props;
+
+        onRemove({id:id});
     }
 
     render () {

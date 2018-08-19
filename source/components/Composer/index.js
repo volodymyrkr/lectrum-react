@@ -7,7 +7,10 @@ import avatar from '../../theme/assets/homer.png';
 import { Consumer } from "../../hoc/withProfile";
 
 class Composer extends Component {
-    static propTypes = {};
+    static propTypes = {
+        onPost: PropTypes.func.isRequired,
+        onRemoveAllPosts: PropTypes.func.isRequired
+    };
 
     state = {
         comment:              '',
@@ -36,6 +39,10 @@ class Composer extends Component {
         });
     }
 
+    onRemoveAllPostsHandler= ()=> {
+        const { onRemoveAllPosts } = this.props;
+        onRemoveAllPosts();
+    }
     onChangeTextArea = (e) => {
         const { value } = e.target;
         this.setState({
@@ -94,6 +101,7 @@ class Composer extends Component {
                                     ></textarea>
                                     <input type="submit" value="post"/>
                                 </form>
+                                <input type="button" value="Remove All" onClick={this.onRemoveAllPostsHandler}/>
                             </section>
                         );
                     }

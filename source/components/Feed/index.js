@@ -8,6 +8,7 @@ import lisaAvatar from "../../theme/assets/lisa.png";
 import homerAvatar from "../../theme/assets/homer.png";
 
 import { getUniqueID } from '../../instruments';
+import Counter from "../Counter";
 
 class Feed extends Component {
     state = {
@@ -45,11 +46,19 @@ class Feed extends Component {
 
     };
 
+    removeAllPosts = () => {
+        this.setState({
+            posts: []
+        });
+
+    };
+
     render () {
+        const {posts} = this.state;
         const postsJSX = (
             <div className={Styles.postsContainer}>
                 {
-                    this.state.posts.map((item) => {
+                    posts.map((item) => {
                         return (
                             <Post
                                 key={item.id}
@@ -70,7 +79,8 @@ class Feed extends Component {
         return (
             <section className={Styles.feed}>
                 <StatusBar/>
-                <Composer onPost={this.addPost}/>
+                <Composer onPost={this.addPost} onRemoveAllPosts={this.removeAllPosts}/>
+                <Counter count={posts.length} />
                 {postsJSX}
             </section>
         );
