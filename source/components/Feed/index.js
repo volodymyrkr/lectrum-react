@@ -44,11 +44,11 @@ class Feed extends Component {
         try {
             this.setPostsFetchingState(true);
             const gettedPost = await api.createPost(post.comment);
-            this.setState((prevState)=>({
+            this.setState((prevState) => ({
                 posts: [gettedPost, ...prevState.posts]
-            }))
+            }));
         } catch (e) {
-            console.error(e.text)
+            console.error(e.text);
         } finally {
             this.setPostsFetchingState(false);
         }
@@ -66,39 +66,56 @@ class Feed extends Component {
         try {
             this.setPostsFetchingState(true);
             await api.removePost(post);
-            this.setState((prevState)=>({
+            this.setState((prevState) => ({
                 posts: prevState.posts.filter(
                     (item) => item.id !== post.id
                 )
-            }))
+            }));
         } catch (e) {
-            console.error(e.text)
+            console.error(e.text);
         } finally {
             this.setPostsFetchingState(false);
         }
     };
-
+    likePost = async (postId) => {
+        try {
+            this.setPostsFetchingState(true);
+            const likedPost = await api.likePost(postId);
+            this.setState({
+                    posts: this.state.posts.map(
+                        (item) => {
+                            return (item.id === postId) ? likedPost : item
+                        }
+                    )
+                }
+            );
+        } catch (e) {
+            console.error(e.text);
+        } finally {
+            this.setPostsFetchingState(false);
+        }
+    };
     removeAllPosts = () => {
         // this.setState({
         //     posts: [],
         // });
         this.filterPostsByCurrentUser();
-    }
+    };
 
-    filterPostsByCurrentUser= ()=> {
-        const {currentUserFirstName:firstName, currentUserLastName:lastName} = this.props;
-        this.setState((prevState)=>({
+    filterPostsByCurrentUser = () => {
+        const { currentUserFirstName: firstName, currentUserLastName: lastName } = this.props;
+        this.setState((prevState) => ({
             posts: prevState.posts.filter(
                 (item) => `${item.firstName} ${lastName}` === `${firstName} ${lastName}`
             )
-        }))
-    }
+        }));
+    };
 
     setPostsFetchingState = (isSpinning) => {
         this.setState({
             isSpinning,
         });
-    }
+    };
 
     fetchPostsAsync = async () => {
         try {
@@ -134,6 +151,7 @@ class Feed extends Component {
                                     // comment={item.comment}
                                     // id={item.id}
                                     onRemove={this.removePost}
+                                    onLike={this.likePost}
                                     userName={`${item.currentUserFirstName} ${item.currentUserLastName}`}>
                                     {["All rights reserved", "Demo version"]}
                                 </Post>

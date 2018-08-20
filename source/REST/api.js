@@ -22,7 +22,7 @@ export const api = {
                 comment,
             })
         });
-        if (response.status != 200) {
+        if (response.status !== 200) {
             throw new Error("Posts were not loaded!");
         }
         const {data: post} = await response.json();
@@ -35,9 +35,22 @@ export const api = {
                 Authorization: TOKEN,
             }
         });
-        if (response.status != 204) {
+        if (response.status !== 204) {
             throw new Error("Post was not deleted!");
         }
         return null;
+    },
+    async likePost(postId) {
+        const response = await fetch(`${MAIN_URL}/${postId}`, {
+            method: 'PUT',
+            headers: {
+                Authorization: TOKEN,
+            }
+        });
+        if (response.status !== 200) {
+            throw new Error("Post was not liked!");
+        }
+        const {data: likedPost} = await response.json();
+        return likedPost;
     }
 };

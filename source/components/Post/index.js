@@ -7,6 +7,8 @@ import 'moment/locale/ru';
 import Styles from './styles.m.css';
 import { errorStyle, successStyle } from "../../utils/errors";
 
+import Like from '../Like';
+
 @withProfile
 export default class Post extends Component {
     static propTypes = {
@@ -42,7 +44,7 @@ export default class Post extends Component {
 
     render () {
         console.log("%c RENDER", successStyle);
-        const { id, firstName: userName, lastName, avatar, comment, created: time } = this.props;
+        const { id, firstName: userName, lastName, avatar, comment, created: time , likes, onLike} = this.props;
         if (comment == "error") {
             undefined();
         }
@@ -63,6 +65,7 @@ export default class Post extends Component {
                         )
                     }
                 </ul>
+                <Like id={id} likes={likes} onLikePost={onLike}/>
             </section>
         );
     }
