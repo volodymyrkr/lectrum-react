@@ -12,7 +12,7 @@ import Counter from "../Counter";
 import Catcher from "../Catcher";
 import Spinner from "../Spinner";
 
-import { api, GROUP_ID} from "../../REST/api";
+import { api, GROUP_ID} from "../../REST";
 import {socket} from '../../socket';
 import { withProfile } from "../../hoc/withProfile";
 
@@ -137,6 +137,27 @@ class Feed extends Component {
     componentDidMount () {
         this.fetchPostsAsync();
         socket.emit('join', GROUP_ID);
+        socket.on('create', (postJSON)=>{
+            const {data:createdPost} = JSON.parse(postJSON);
+            const {currentUserFirstName, currentUserLastName} = this.props;
+            console.log("POST CREATED",createdPost);
+            if (`${currentUserFirstName} ${currentUserLastName}`!==`${createdPost.firstName} ${createdPost.lastName}`) {
+                this.setState(
+                    {
+                        posts:[createdPost, ...this.state.posts]
+                    }
+                )
+            }
+        });
+        socket.on('remove', (postJSON)=>{
+            const {data:removedPost} = JSON.parse(postJSON);
+            console.log("POST REMOVED",removedPost);
+            this.setState(
+                {
+                    posts:this.state.posts.filter((item)=>(item.id!==removedPost))
+                }
+            )
+        });
     }
 
     render () {
