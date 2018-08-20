@@ -17,7 +17,7 @@
     &.postInEnd {
       transform: scale(1);
       transition: opacity 500ms var(--cubic1),
-      transform 500ms var(--cubic1);
+      transform 1000ms var(--cubic1);
       opacity: 1;
     }
 

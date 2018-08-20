@@ -14,7 +14,7 @@ import Spinner from "../Spinner";
 import PostMan from "../Postman";
 
 import gsap from 'gsap';
-import { Transition } from 'react-transition-group';
+import { Transition, CSSTransition, TransitionGroup } from 'react-transition-group';
 
 import { api, GROUP_ID } from "../../REST";
 import { socket } from '../../socket';
@@ -169,41 +169,43 @@ class Feed extends Component {
             composer, 3,
             {
                 opacity: 0,
-                x:-3000,
-                scale:0
+                x:       -3000,
+                scale:   0
             },
             {
                 opacity: 1,
-                x:0,
-                scale:1
+                x:       0,
+                scale:   1
             }
         );
     };
 
     render () {
         const { posts, isSpinning } = this.state;
-        const postsJSX = (
-            <div className={Styles.postsContainer}>
-                {
-                    posts.map((item) => {
-                        return (
-                            <Catcher key={item.id}>
-                                <Post
-                                    {...item}
-                                    // avatar={item.avatar}
-                                    // comment={item.comment}
-                                    // id={item.id}
-                                    onRemove={this.removePost}
-                                    onLike={this.likePost}
-                                    userName={`${item.currentUserFirstName} ${item.currentUserLastName}`}>
-                                    {["All rights reserved", "Demo version"]}
-                                </Post>
-                            </Catcher>
-                        );
-                    })
-                }
-            </div>
-        );
+        const postsJSX =
+            posts.map((post) => {
+                return (
+                    <CSSTransition
+                        classNames = { {
+                            enter:       Styles.postInStart,
+                            enterActive: Styles.postInEnd,
+                            exit:        Styles.postOutStart,
+                            exitActive:  Styles.postOutEnd,
+                        } }
+                        timeout={1000}
+                        key = {post.id} >
+                        <Catcher>
+                            <Post
+                                {...post}
+                                onRemove={this.removePost}
+                                onLike={this.likePost}
+                                userName={`${post.currentUserFirstName} ${post.currentUserLastName}`}>
+                                {["All rights reserved", "Demo version"]}
+                            </Post>
+                        </Catcher>
+                    </CSSTransition>
+                );
+            });
 
         return (
             <section className={Styles.feed}>
@@ -212,12 +214,12 @@ class Feed extends Component {
                     appear
                     in
                     timeout={3000}
-                    onEntered={()=>console.log("HELLO")}
+                    onEntered={() => console.log("HELLO")}
                     onEnter={this.animateComposerEnter}>
                     <Composer onPost={this.addPostAsync} onRemoveAllPosts={this.removeAllPosts}/>
                 </Transition>
                 <Counter count={posts.length}/>
-                {postsJSX}
+                <TransitionGroup>{postsJSX}</TransitionGroup>
                 <Spinner isSpinning={isSpinning}/>
                 <PostMan/>
             </section>
