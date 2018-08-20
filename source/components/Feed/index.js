@@ -12,8 +12,11 @@ import Counter from "../Counter";
 import Catcher from "../Catcher";
 import Spinner from "../Spinner";
 
-import { api, GROUP_ID} from "../../REST";
-import {socket} from '../../socket';
+import gsap from 'gsap';
+import { Transition } from 'react-transition-group';
+
+import { api, GROUP_ID } from "../../REST";
+import { socket } from '../../socket';
 import { withProfile } from "../../hoc/withProfile";
 
 class Feed extends Component {
@@ -85,7 +88,7 @@ class Feed extends Component {
             this.setState({
                     posts: this.state.posts.map(
                         (item) => {
-                            return (item.id === post.id) ? likedPost : item
+                            return (item.id === post.id) ? likedPost : item;
                         }
                     )
                 }
@@ -137,28 +140,44 @@ class Feed extends Component {
     componentDidMount () {
         this.fetchPostsAsync();
         socket.emit('join', GROUP_ID);
-        socket.on('create', (postJSON)=>{
-            const {data:createdPost} = JSON.parse(postJSON);
-            const {currentUserFirstName, currentUserLastName} = this.props;
-            console.log("POST CREATED",createdPost);
-            if (`${currentUserFirstName} ${currentUserLastName}`!==`${createdPost.firstName} ${createdPost.lastName}`) {
+        socket.on('create', (postJSON) => {
+            const { data: createdPost } = JSON.parse(postJSON);
+            const { currentUserFirstName, currentUserLastName } = this.props;
+            console.log("POST CREATED", createdPost);
+            if (`${currentUserFirstName} ${currentUserLastName}` !== `${createdPost.firstName} ${createdPost.lastName}`) {
                 this.setState(
                     {
-                        posts:[createdPost, ...this.state.posts]
+                        posts: [createdPost, ...this.state.posts]
                     }
-                )
+                );
             }
         });
-        socket.on('remove', (postJSON)=>{
-            const {data:removedPost} = JSON.parse(postJSON);
-            console.log("POST REMOVED",removedPost);
+        socket.on('remove', (postJSON) => {
+            const { data: removedPost } = JSON.parse(postJSON);
+            console.log("POST REMOVED", removedPost);
             this.setState(
                 {
-                    posts:this.state.posts.filter((item)=>(item.id!==removedPost))
+                    posts: this.state.posts.filter((item) => (item.id !== removedPost))
                 }
-            )
+            );
         });
     }
+
+    animateComposerEnter = (composer) => {
+        gsap.fromTo(
+            composer, 3,
+            {
+                opacity: 0,
+                x:-3000,
+                scale:0
+            },
+            {
+                opacity: 1,
+                x:0,
+                scale:1
+            }
+        );
+    };
 
     render () {
         const { posts, isSpinning } = this.state;
@@ -188,7 +207,14 @@ class Feed extends Component {
         return (
             <section className={Styles.feed}>
                 <StatusBar/>
-                <Composer onPost={this.addPostAsync} onRemoveAllPosts={this.removeAllPosts}/>
+                <Transition
+                    appear
+                    in
+                    timeout={3000}
+                    onEntered={()=>console.log("HELLO")}
+                    onEnter={this.animateComposerEnter}>
+                    <Composer onPost={this.addPostAsync} onRemoveAllPosts={this.removeAllPosts}/>
+                </Transition>
                 <Counter count={posts.length}/>
                 {postsJSX}
                 <Spinner isSpinning={isSpinning}/>
