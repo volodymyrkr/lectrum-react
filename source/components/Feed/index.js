@@ -13,6 +13,7 @@ import Catcher from "../Catcher";
 import Spinner from "../Spinner";
 
 import { api } from "../../REST/api";
+import { withProfile } from "../../hoc/withProfile";
 
 class Feed extends Component {
     state = {
@@ -48,32 +49,56 @@ class Feed extends Component {
             }))
         } catch (e) {
             console.error(e.text)
-        } this.setPostsFetchingState(false);
+        } finally {
+            this.setPostsFetchingState(false);
+        }
     };
 
-    removePost = (post) => {
-        const posts = this.state.posts;
-
-        this.setState({
-            posts: posts.filter(
-                (item) => item.id !== post.id
-            ),
-        });
-
+    removePost = async (post) => {
+        console.log("DELETE");
+        // const posts = this.state.posts;
+        //
+        // this.setState({
+        //     posts: posts.filter(
+        //         (item) => item.id !== post.id
+        //     ),
+        // });
+        try {
+            this.setPostsFetchingState(true);
+            await api.removePost(post);
+            this.setState((prevState)=>({
+                posts: prevState.posts.filter(
+                    (item) => item.id !== post.id
+                )
+            }))
+        } catch (e) {
+            console.error(e.text)
+        } finally {
+            this.setPostsFetchingState(false);
+        }
     };
 
     removeAllPosts = () => {
-        this.setState({
-            posts: [],
-        });
+        // this.setState({
+        //     posts: [],
+        // });
+        this.filterPostsByCurrentUser();
+    }
 
-    };
+    filterPostsByCurrentUser= ()=> {
+        const {currentUserFirstName:firstName, currentUserLastName:lastName} = this.props;
+        this.setState((prevState)=>({
+            posts: prevState.posts.filter(
+                (item) => `${item.firstName} ${lastName}` === `${firstName} ${lastName}`
+            )
+        }))
+    }
 
     setPostsFetchingState = (isSpinning) => {
         this.setState({
             isSpinning,
         });
-    };
+    }
 
     fetchPostsAsync = async () => {
         try {
@@ -105,9 +130,9 @@ class Feed extends Component {
                             <Catcher key={item.id}>
                                 <Post
                                     {...item}
-                                    avatar={item.avatar}
-                                    comment={item.comment}
-                                    id={item.id}
+                                    // avatar={item.avatar}
+                                    // comment={item.comment}
+                                    // id={item.id}
                                     onRemove={this.removePost}
                                     userName={`${item.currentUserFirstName} ${item.currentUserLastName}`}>
                                     {["All rights reserved", "Demo version"]}
@@ -131,4 +156,4 @@ class Feed extends Component {
     }
 }
 
-export default Feed;
+export default withProfile(Feed);

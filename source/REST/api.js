@@ -27,5 +27,17 @@ export const api = {
         }
         const {data: post} = await response.json();
         return post;
+    },
+    async removePost(post) {
+        const response = await fetch(`${MAIN_URL}/${post.id}`, {
+            method: 'DELETE',
+            headers: {
+                Authorization: TOKEN,
+            }
+        });
+        if (response.status != 204) {
+            throw new Error("Post was not deleted!");
+        }
+        return null;
     }
 };

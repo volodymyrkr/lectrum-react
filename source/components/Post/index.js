@@ -24,7 +24,6 @@ export default class Post extends Component {
         const {
             firstName, lastName, currentUserFirstName, currentUserLastName
         } = this.props;
-        debugger;
         return `${firstName} ${lastName}`===`${currentUserFirstName} ${currentUserLastName}`?<span className={Styles.cross} onClick={this.onClickHandler}></span>:null;
     }
     componentWillMount () {
