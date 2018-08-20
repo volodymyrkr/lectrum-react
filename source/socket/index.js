@@ -1,7 +1,7 @@
 import io from 'socket.io-client';
 
-import {ROOT_URL} from '../REST/config';
+import {SOCKET_URL} from '../REST';
 
-export const socket = io(ROOT_URL, {
+export const socket = io(SOCKET_URL, {
     path: '/react/ws'
 })
