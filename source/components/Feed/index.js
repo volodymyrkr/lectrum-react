@@ -11,6 +11,7 @@ import { getUniqueID } from '../../instruments';
 import Counter from "../Counter";
 import Catcher from "../Catcher";
 import Spinner from "../Spinner";
+import PostMan from "../Postman";
 
 import gsap from 'gsap';
 import { Transition } from 'react-transition-group';
@@ -218,6 +219,7 @@ class Feed extends Component {
                 <Counter count={posts.length}/>
                 {postsJSX}
                 <Spinner isSpinning={isSpinning}/>
+                <PostMan/>
             </section>
         );
     }
