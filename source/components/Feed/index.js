@@ -12,7 +12,8 @@ import Counter from "../Counter";
 import Catcher from "../Catcher";
 import Spinner from "../Spinner";
 
-import { api } from "../../REST/api";
+import { api, GROUP_ID} from "../../REST/api";
+import {socket} from '../../socket';
 import { withProfile } from "../../hoc/withProfile";
 
 class Feed extends Component {
@@ -77,14 +78,14 @@ class Feed extends Component {
             this.setPostsFetchingState(false);
         }
     };
-    likePost = async (postId) => {
+    likePost = async (post) => {
         try {
             this.setPostsFetchingState(true);
-            const likedPost = await api.likePost(postId);
+            const likedPost = await api.likePost(post.id);
             this.setState({
                     posts: this.state.posts.map(
                         (item) => {
-                            return (item.id === postId) ? likedPost : item
+                            return (item.id === post.id) ? likedPost : item
                         }
                     )
                 }
@@ -135,6 +136,7 @@ class Feed extends Component {
 
     componentDidMount () {
         this.fetchPostsAsync();
+        socket.emit('join', GROUP_ID);
     }
 
     render () {

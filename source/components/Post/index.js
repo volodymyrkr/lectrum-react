@@ -41,7 +41,11 @@ export default class Post extends Component {
 
         onRemove({ id: id });
     };
+    onClickLikeHandler= () => {
+        const { id, onLike } = this.props;
 
+        onLike({ id: id });
+    }
     render () {
         console.log("%c RENDER", successStyle);
         const { id, firstName: userName, lastName, avatar, comment, created: time , likes, onLike} = this.props;
@@ -65,7 +69,7 @@ export default class Post extends Component {
                         )
                     }
                 </ul>
-                <Like id={id} likes={likes} onLikePost={onLike}/>
+                <Like id={id} likes={likes} onClick={this.onClickLikeHandler}/>
             </section>
         );
     }

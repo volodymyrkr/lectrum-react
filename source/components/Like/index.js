@@ -7,7 +7,7 @@ import { withProfile } from "../../hoc/withProfile";
 
 class Like extends Component {
     static propTypes = {
-        onLikePost: PropTypes.func.isRequired,
+        onClick: PropTypes.func.isRequired,
         id:         PropTypes.string.isRequired,
         likes:      PropTypes.arrayOf(
             PropTypes.shape({
@@ -34,9 +34,9 @@ class Like extends Component {
     };
 
     likePost = () => {
-        const { onLikePost, id } = this.props;
+        const { onClick, id } = this.props;
 
-        onLikePost(id);
+        onClick(id);
     };
 
     getLikedByMe = () => {
