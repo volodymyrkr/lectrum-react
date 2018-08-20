@@ -18,7 +18,8 @@ class Feed extends Component {
     state = {
         isSpinning: false,
         posts:      [
-            { id:                   getUniqueID(),
+            {
+                id:                   getUniqueID(),
                 avatar:               lisaAvatar,
                 comment:              "asdasdasd",
                 currentUserFirstName: "asd",
@@ -27,18 +28,27 @@ class Feed extends Component {
         ],
     };
 
-    addPost = (post) => {
-        this.setState(
-            (prevState) => ({
-                posts: [{
-                    id:                   getUniqueID(),
-                    comment:              post.comment,
-                    avatar:               post.avatar,
-                    currentUserFirstName: post.userFirstName,
-                    currentUserLastName:  post.userLastName,
-                }, ...prevState.posts],
-            })
-        );
+    addPostAsync = async (post) => {
+        // this.setState(
+        //     (prevState) => ({
+        //         posts: [{
+        //             id:                   getUniqueID(),
+        //             comment:              post.comment,
+        //             avatar:               post.avatar,
+        //             currentUserFirstName: post.userFirstName,
+        //             currentUserLastName:  post.userLastName,
+        //         }, ...prevState.posts],
+        //     })
+        // );
+        try {
+            this.setPostsFetchingState(true);
+            const gettedPost = await api.createPost(post.comment);
+            this.setState((prevState)=>({
+                posts: [gettedPost, ...prevState.posts]
+            }))
+        } catch (e) {
+            console.error(e.text)
+        } this.setPostsFetchingState(false);
     };
 
     removePost = (post) => {
@@ -58,25 +68,29 @@ class Feed extends Component {
         });
 
     };
-    setPostsFetchingState=(isSpinning)=>{
+
+    setPostsFetchingState = (isSpinning) => {
         this.setState({
-            isSpinning
-        })
-    }
+            isSpinning,
+        });
+    };
+
     fetchPostsAsync = async () => {
         try {
-            this.setPostsFetchingState(true)
+            this.setPostsFetchingState(true);
             const posts = await api.fetchPosts();
-            this.setState(()=>({
-                posts
-            }))
+
+            this.setState(() => ({
+                posts,
+            }));
 
         } catch (error) {
 
         } finally {
             this.setPostsFetchingState(false);
         }
-    }
+    };
+
     componentDidMount () {
         this.fetchPostsAsync();
     }
@@ -84,17 +98,18 @@ class Feed extends Component {
     render () {
         const { posts, isSpinning } = this.state;
         const postsJSX = (
-            <div className = { Styles.postsContainer }>
+            <div className={Styles.postsContainer}>
                 {
                     posts.map((item) => {
                         return (
-                            <Catcher key = { item.id }>
+                            <Catcher key={item.id}>
                                 <Post
-                                    avatar = { item.avatar }
-                                    comment = { item.comment }
-                                    id = { item.id }
-                                    onRemove = { this.removePost }
-                                    userName = { `${item.currentUserFirstName} ${item.currentUserLastName}` }>
+                                    {...item}
+                                    avatar={item.avatar}
+                                    comment={item.comment}
+                                    id={item.id}
+                                    onRemove={this.removePost}
+                                    userName={`${item.currentUserFirstName} ${item.currentUserLastName}`}>
                                     {["All rights reserved", "Demo version"]}
                                 </Post>
                             </Catcher>
@@ -105,12 +120,12 @@ class Feed extends Component {
         );
 
         return (
-            <section className = { Styles.feed }>
-                <StatusBar />
-                <Composer onPost = { this.addPost } onRemoveAllPosts = { this.removeAllPosts } />
-                <Counter count = { posts.length } />
+            <section className={Styles.feed}>
+                <StatusBar/>
+                <Composer onPost={this.addPostAsync} onRemoveAllPosts={this.removeAllPosts}/>
+                <Counter count={posts.length}/>
                 {postsJSX}
-                <Spinner isSpinning = { isSpinning } />
+                <Spinner isSpinning={isSpinning}/>
             </section>
         );
     }
