@@ -16,6 +16,15 @@ export default class StatusBar extends Component {
                 online:true,
             })
         });
+        socket.on('disconnect', () => {
+            this.setState({
+                online:false,
+            })
+        });
+    }
+    componentWillUnmount() {
+        socket.removeListener('connect');
+        socket.removeListener('disconnect');
     }
     render () {
         const { avatar, currentUserFirstName, currentUserLastName } = this.props;
