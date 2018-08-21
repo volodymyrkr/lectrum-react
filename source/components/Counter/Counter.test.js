@@ -1,4 +1,3 @@
-import React from 'react';
 import Counter from './';
 
 import dom from 'react-test-renderer'
