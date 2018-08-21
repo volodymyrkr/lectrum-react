@@ -72,7 +72,7 @@ export class Composer extends Component {
     };
 
     onSubmitForm = (e) => {
-        e.preventDefault();
+       // e.preventDefault();
         this.addPost();
     };
 
