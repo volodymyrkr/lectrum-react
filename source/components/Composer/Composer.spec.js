@@ -73,4 +73,14 @@ describe('Composer', () => {
             //expect(typeof result.state('currentUserLastName')).toBe('string');
         });
     });
+    describe(' should have core class methods', () => {
+        describe('onSubmitForm', ()=>{
+           test.only('should call preventDefault()', ()=>{
+               result.instance().onSubmitForm({
+                   preventDefault: mocks.preventDefaultMock,
+               })
+               expect(mocks.preventDefaultMock).toHaveBeenCalledTimes(1);
+           })
+        });
+    });
 });
