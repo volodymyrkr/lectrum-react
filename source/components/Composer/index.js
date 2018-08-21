@@ -7,8 +7,8 @@ import { withProfile } from "../../hoc/withProfile";
 
 export class Composer extends Component {
     static propTypes = {
-        onPost:           PropTypes.func.isRequired,
-        onRemoveAllPosts: PropTypes.func.isRequired,
+        // onPost:           PropTypes.func.isRequired,
+        // onRemoveAllPosts: PropTypes.func.isRequired,
     };
 
     constructor (props) {
