@@ -55,9 +55,15 @@ describe('Composer', () => {
             expect(result.find('img')).toHaveLength(1);
         });
     });
-    describe(' should have valid markup', () => {
+    describe(' should have valid props', () => {
         test.only('addPost shoud be an async func', async() => {
             await expect(result.prop('addPost')()).resolves.toBeUndefined();
+            console.log(result.prop('currentUserFirstName'));
+            expect(typeof result.prop('currentUserFirstName')).toBe('string');
+            expect(result.prop('currentUserFirstName')).toBeDefined();
+            expect(result.prop('currentUserLastName')).toBeUndefined();
+            // expect(result.prop('currentUserLastName')()).toHaveLength(1);
+            // expect(result.prop('avatar')).toHaveLength(1);
         });
     });
 });
