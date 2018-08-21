@@ -7,9 +7,7 @@
     "bail": false,
     "collectCoverage": false,
     "collectCoverageFrom": [
-        "<rootDir>/source/instruments/*.js",
-        "<rootDir>/source/components/Counter/*.js",
-        "<rootDir>/source/components/Composer/*.js"
+        "<rootDir>/source/instruments/*.js"
     ],
     "modulePaths": ["<rootDir>/source", "<rootDir>/node_modules"],
     "moduleFileExtensions": ["js", "json", "css"],
