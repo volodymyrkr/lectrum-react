@@ -66,4 +66,11 @@ describe('Composer', () => {
             // expect(result.prop('avatar')).toHaveLength(1);
         });
     });
+    describe(' should have valid states', () => {
+        test.only('addPost shoud be an async func', () => {
+            expect(typeof result.state('comment')).toBe('string');
+            expect(typeof result.state('currentUserFirstName')).toBe('string');
+            //expect(typeof result.state('currentUserLastName')).toBe('string');
+        });
+    });
 });
