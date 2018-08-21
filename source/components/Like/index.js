@@ -1,15 +1,15 @@
-import React, { Component } from 'react';
-import PropTypes from 'prop-types';
-import cx from 'classnames';
+import React, { Component } from "react";
+import PropTypes from "prop-types";
+import cx from "classnames";
 
-import Styles from './styles.m.css';
+import Styles from "./styles.m.css";
 import { withProfile } from "../../hoc/withProfile";
 
 class Like extends Component {
     static propTypes = {
         onClick: PropTypes.func.isRequired,
-        id:         PropTypes.string.isRequired,
-        likes:      PropTypes.arrayOf(
+        id:      PropTypes.string.isRequired,
+        likes:   PropTypes.arrayOf(
             PropTypes.shape({
                 id:        PropTypes.string.isRequired,
                 firstName: PropTypes.string.isRequired,
@@ -42,11 +42,12 @@ class Like extends Component {
     getLikedByMe = () => {
         const { currentUserFirstName, currentUserLastName, likes } = this.props;
 
-        return likes.some(
-            ({ firstName, lastName }) => {
-                return `${firstName} ${lastName}` === `${currentUserFirstName} ${currentUserLastName}`;
-            }
-        );
+        return likes.some(({ firstName, lastName }) => {
+            return (
+                `${firstName} ${lastName}` ===
+                `${currentUserFirstName} ${currentUserLastName}`
+            );
+        });
     };
     getLikeStyles = () => {
         const likeByMe = this.getLikedByMe();
@@ -58,11 +59,11 @@ class Like extends Component {
     getLikersList = () => {
         const { showLikers } = this.state;
         const { likes } = this.props;
-        const likesJSX = likes.map(
-            ({ firstName, lastName, id }) => (
-                <li key = { id }>{firstName} {lastName}</li>
-            )
-        );
+        const likesJSX = likes.map(({ firstName, lastName, id }) => (
+            <li key = { id }>
+                {firstName} {lastName}
+            </li>
+        ));
 
         return likes.length && showLikers ? <ul>{likesJSX}</ul> : null;
     };
@@ -93,7 +94,9 @@ class Like extends Component {
                 </span>
                 <div>
                     {likers}
-                    <span onMouseEnter = { this.showLikers } onMouseLeave = { this.hideLikers }>
+                    <span
+                        onMouseEnter = { this.showLikers }
+                        onMouseLeave = { this.hideLikers }>
                         {likesDescription}
                     </span>
                 </div>

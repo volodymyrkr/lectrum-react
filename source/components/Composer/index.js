@@ -1,14 +1,14 @@
-import React, { Component } from 'react';
-import PropTypes from 'prop-types';
+import React, { Component } from "react";
+import PropTypes from "prop-types";
 
-import Styles from './styles.m.css';
+import Styles from "./styles.m.css";
 
 import { withProfile } from "../../hoc/withProfile";
 
 export class Composer extends Component {
     static propTypes = {
         onPost:           PropTypes.func.isRequired,
-        onRemoveAllPosts: PropTypes.func.isRequired
+        onRemoveAllPosts: PropTypes.func.isRequired,
     };
 
     constructor (props) {
@@ -16,39 +16,46 @@ export class Composer extends Component {
     }
 
     state = {
-        comment: '',
+        comment: "",
         ...this.props,
     };
 
     addPost () {
         const { comment } = this.state;
-        const { onPost, avatar, currentUserFirstName, currentUserLastName } = this.props;
+        const {
+            onPost,
+            avatar,
+            currentUserFirstName,
+            currentUserLastName,
+        } = this.props;
 
         if (!comment.trim()) {
             return;
         }
 
         onPost({
-            avatar:        avatar,
+            avatar,
             userFirstName: currentUserFirstName,
             userLastName:  currentUserLastName,
-            comment:       comment
+            comment,
         });
 
         this.setState({
-            comment: ""
+            comment: "",
         });
     }
 
     onRemoveAllPostsHandler = () => {
         const { onRemoveAllPosts } = this.props;
+
         onRemoveAllPosts();
     };
 
     onChangeTextArea = (e) => {
         const { value } = e.target;
+
         this.setState({
-            comment: value
+            comment: value,
         });
     };
 
@@ -71,27 +78,39 @@ export class Composer extends Component {
 
     render () {
         const { comment } = this.state;
-        const { avatar, currentUserFirstName, currentUserLastName } = this.props;
+        const {
+            avatar,
+            currentUserFirstName,
+            currentUserLastName,
+        } = this.props;
 
         return (
-            <section className={Styles.composer}>
+            <section className = { Styles.composer }>
                 <div>
-                    <img src={avatar} alt="" className="src"/>
-                    <div
-                        className={Styles.userName}>{currentUserFirstName} {currentUserLastName}</div>
+                    <img alt = '' className = 'src' src = { avatar } />
+                    <div className = { Styles.userName }>
+                        {currentUserFirstName} {currentUserLastName}
+                    </div>
                 </div>
-                <form id="form" onSubmit={this.onSubmitForm} onKeyDown={this.onKeyPressHandler}>
-                    <textarea id="text"
-                              placeholder={`Input your post ${currentUserFirstName}`}
-                              value={comment}
-                              onChange={this.onChangeTextArea}
-                              onCut={this.onCopyCutHandler}
-                              onCopy={this.onCopyCutHandler}
-
-                    ></textarea>
-                    <input type="submit" value="post"/>
+                <form
+                    id = 'form'
+                    onKeyDown = { this.onKeyPressHandler }
+                    onSubmit = { this.onSubmitForm }>
+                    <textarea
+                        id = 'text'
+                        onChange = { this.onChangeTextArea }
+                        onCopy = { this.onCopyCutHandler }
+                        onCut = { this.onCopyCutHandler }
+                        placeholder = { `Input your post ${currentUserFirstName}` }
+                        value = { comment }
+                    />
+                    <input type = 'submit' value = 'post' />
                 </form>
-                <input type="button" value="Remove All" onClick={this.onRemoveAllPostsHandler}/>
+                <input
+                    type = 'button'
+                    value = 'Remove All'
+                    onClick = { this.onRemoveAllPostsHandler }
+                />
             </section>
         );
     }

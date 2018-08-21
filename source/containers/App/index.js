@@ -1,19 +1,19 @@
-import React, { Component, StrictMode } from 'react';
-import { hot } from 'react-hot-loader';
+import React, { Component, StrictMode } from "react";
+import { hot } from "react-hot-loader";
 
 import Feed from "../../components/Feed";
 import avatar from "../../theme/assets/lisa.png";
 
 import { Provider } from "../../hoc/withProfile";
 
-import './common.css';
+import "./common.css";
 
 import Catcher from "../../components/Catcher";
 
 const userConfig = {
     avatar,
     currentUserFirstName: "Владимир",
-    currentUserLastName:  "Кравченко"
+    currentUserLastName:  "Кравченко",
 };
 
 @hot(module)
@@ -25,8 +25,8 @@ class App extends Component {
     render () {
         return (
             <Catcher>
-                <Provider value={userConfig}>
-                    <Feed/>
+                <Provider value = { userConfig }>
+                    <Feed />
                 </Provider>
             </Catcher>
         );

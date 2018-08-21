@@ -1,48 +1,52 @@
-import React, { Component } from 'react';
+import React, { Component } from "react";
 import { Consumer, withProfile } from "../../hoc/withProfile";
-import {socket} from '../../socket';
+import { socket } from "../../socket";
 
-import Styles from './styles.m.css';
-import cx from 'classnames';
+import Styles from "./styles.m.css";
+import cx from "classnames";
 
 @withProfile
 export default class StatusBar extends Component {
     state = {
         online: false,
-    }
-    componentDidMount() {
-        socket.on('connect', () => {
+    };
+    componentDidMount () {
+        socket.on("connect", () => {
             this.setState({
-                online:true,
-            })
+                online: true,
+            });
         });
-        socket.on('disconnect', () => {
+        socket.on("disconnect", () => {
             this.setState({
-                online:false,
-            })
+                online: false,
+            });
         });
     }
-    componentWillUnmount() {
-        socket.removeListener('connect');
-        socket.removeListener('disconnect');
+    componentWillUnmount () {
+        socket.removeListener("connect");
+        socket.removeListener("disconnect");
     }
     render () {
-        const { avatar, currentUserFirstName, currentUserLastName } = this.props;
-        const {online} = this.state;
+        const {
+            avatar,
+            currentUserFirstName,
+            currentUserLastName,
+        } = this.props;
+        const { online } = this.state;
         const statusStyles = cx(Styles.status, {
             [Styles.offline]: !online,
             [Styles.online]:  online,
-        })
-        const statusMessage = online?"Online":"Offline"
+        });
+        const statusMessage = online ? "Online" : "Offline";
 
         return (
-            <section className={Styles.statusBar}>
-                <div className={statusStyles}>
+            <section className = { Styles.statusBar }>
+                <div className = { statusStyles }>
                     <div>{statusMessage}</div>
-                    <span></span>
+                    <span />
                 </div>
                 <button>
-                    <img src={avatar} alt=""/>
+                    <img alt = '' src = { avatar } />
                     <span>{currentUserFirstName}</span>&nbsp;
                     <span>{currentUserLastName}</span>
                 </button>

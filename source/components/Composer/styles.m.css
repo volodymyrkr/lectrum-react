@@ -1,34 +1,34 @@
 @import '../../theme/palette.css';
 
 .composer {
-    display: flex;
-    position: relative;
-    width: 500px;
-    max-width: calc(100vw - 20px);
-    height: 150px;
-    margin-bottom: 20px;
-    padding: 12px;
-    border: 1px solid var(--paletteColor3);
-    border-radius: 5px;
-    background-color: var(--paletteColor2);
+  display: flex;
+  position: relative;
+  width: 500px;
+  max-width: calc(100vw - 20px);
+  height: 150px;
+  margin-bottom: 20px;
+  padding: 12px;
+  border: 1px solid var(--paletteColor3);
+  border-radius: 5px;
+  background-color: var(--paletteColor2);
 
-& .userName {
+  & .userName {
     font-size: small;
   }
-& img {
-      width: 40px;
-      height: 40px;
-      margin-right: 15px;
-      transition: border 0.5s ease;
-      border: 1px solid var(--paletteColor5);
-      border-radius: 50%;
-      cursor: pointer;
+  & img {
+    width: 40px;
+    height: 40px;
+    margin-right: 15px;
+    transition: border 0.5s ease;
+    border: 1px solid var(--paletteColor5);
+    border-radius: 50%;
+    cursor: pointer;
   }
 
-& form {
-      width: 100%;
+  & form {
+    width: 100%;
 
-& input[type='submit'] {
+    & input[type='submit'] {
       position: absolute;
       right: 10px;
       bottom: 10px;
@@ -45,12 +45,12 @@
       cursor: pointer;
       appearance: button;
 
-&:hover {
-     background-color: color-mod(var(--paletteColor6) shade(20%));
- }
-}
+      &:hover {
+        background-color: color-mod(var(--paletteColor6) shade(20%));
+      }
+    }
 
-& textarea {
+    & textarea {
       width: 100%;
       height: 80px;
       margin-top: 7px;
@@ -61,22 +61,22 @@
       font-weight: 300;
       resize: none;
 
-&::-webkit-scrollbar {
-     display: none;
- }
+      &::-webkit-scrollbar {
+        display: none;
+      }
 
-&::placeholder {
-     transition: color 0.4s ease-out;
-     color: var(--paletteColor5);
- }
+      &::placeholder {
+        transition: color 0.4s ease-out;
+        color: var(--paletteColor5);
+      }
 
-&:focus::placeholder {
-     color: var(--paletteColor5);
- }
+      &:focus::placeholder {
+        color: var(--paletteColor5);
+      }
 
-&:focus {
-     font-size: 24px;
- }
-}
-}
+      &:focus {
+        font-size: 24px;
+      }
+    }
+  }
 }

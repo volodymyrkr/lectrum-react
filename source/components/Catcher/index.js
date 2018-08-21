@@ -1,18 +1,18 @@
-import React, { Component } from 'react';
-import PropTypes from 'prop-types';
-import Styles from './styles.m.css';
+import React, { Component } from "react";
+import PropTypes from "prop-types";
+import Styles from "./styles.m.css";
 
 class Catcher extends Component {
     static propTypes = {
-        children: PropTypes.object.isRequired
+        children: PropTypes.object.isRequired,
     };
     state = {
-        error: false
+        error: false,
     };
 
     componentDidCatch (error, stack) {
         this.setState({
-            error: true
+            error: true,
         });
     }
 
@@ -22,7 +22,7 @@ class Catcher extends Component {
 
         if (error) {
             return (
-                <section className={Styles.catcher}>
+                <section className = { Styles.catcher }>
                     <span>A mysterious 👽 &nbsp;error 📛 &nbsp;occured.</span>
                     <p>
                         Our space 🛰 &nbsp;engineers strike team 👩🏼‍🚀 👨🏼‍🚀 &nbsp;is
@@ -31,9 +31,8 @@ class Catcher extends Component {
                 </section>
             );
         }
-        return (
-            children
-        );
+
+        return children;
     }
 }
 
