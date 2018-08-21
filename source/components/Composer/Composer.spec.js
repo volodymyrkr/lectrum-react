@@ -55,4 +55,9 @@ describe('Composer', () => {
             expect(result.find('img')).toHaveLength(1);
         });
     });
+    describe(' should have valid markup', () => {
+        test.only('addPost shoud be an async func', async() => {
+            await expect(result.prop('addPost')()).resolves.toBeUndefined();
+        });
+    });
 });
